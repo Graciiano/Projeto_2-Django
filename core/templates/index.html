@@ -1,0 +1,59 @@
+{% load bootstrap4 static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <title>Index</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Produtos</h1>
+
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Produto</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Estoque</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto in produtos %}
+                    <tr>
+                        <td>{{ produto.id }}</td>
+                        <td><a href="#modal{{ produto.id }}" data-toggle="modal">{{ produto.nome }}</a></td>
+                        <td>{{ produto.preco }}</td>
+                        <td>{{ produto.estoque }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        {% for produto in produtos %}
+        <!-- Modal -->
+        <div class="modal fade" id="modal{{ produto.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ produto.nome }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="{{ produto.imagem.url }}" class="img-fluid" alt="{{ produto.nome }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+    </div>
+
+    {% bootstrap_javascript jquery='full' %}
+</body>
+</html>
